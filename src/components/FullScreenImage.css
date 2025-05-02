@@ -1,0 +1,100 @@
+/* src/components/FullScreenImage.css */
+.full-screen-overlay {
+  position: fixed;
+  inset: 0;
+  /* Background color and opacity handled by transitions in index.css */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: pointer; /* Cursor for background close */
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  /* Base transition defined in index.css */
+}
+
+.image-view-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: default; /* Default cursor for content area */
+  position: relative;
+}
+
+.image-zoom-container {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Clip scaled image */
+  margin-bottom: 10px;
+}
+
+.full-screen-image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  transform-origin: center center;
+  /* Base transition defined in index.css */
+  /* Scale animation applied via inline style */
+}
+
+.image-filename {
+  color: var(--modal-text-color);
+  font-size: 0.9em;
+  background-color: rgba(0, 0, 0, 0.4); /* Use direct rgba for subtle bg */
+  padding: 4px 10px;
+  border-radius: 4px;
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: none;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* --- Button Styles --- */
+.close-button, .nav-button {
+  position: absolute;
+  background-color: var(--modal-button-bg);
+  color: var(--modal-button-text);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  z-index: 1002; /* Above image area */
+  /* Base transition defined in index.css */
+  font-size: 1.5rem; /* Adjust size */
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  line-height: 1; /* Ensure icon/text centers well */
+}
+
+.close-button {
+  top: 15px;
+  right: 20px;
+  font-size: 1.8rem; /* Make X slightly larger */
+}
+
+.nav-button {
+  top: 50%;
+  transform: translateY(-50%); /* Keep base transform */
+}
+.prev-button { left: 15px; }
+.next-button { right: 15px; }
+
+/* Hover states handled in index.css via .animations-enabled */

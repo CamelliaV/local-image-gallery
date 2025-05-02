@@ -1,0 +1,25 @@
+/* src/components/ImageCard.css */
+.image-card {
+  width: 100%; /* Take full width of the column */
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--card-shadow-color); /* Use variable */
+  background-color: var(--card-bg-color); /* Use variable */
+  /* Base transition defined in index.css */
+}
+
+/* Hover/Active states handled in index.css via .animations-enabled */
+
+.image-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px; /* If just image, keep */
+  /* border-radius: 8px 8px 0 0; /* Only top corners if text below */
+}
+
+/* Optional: Add space if you have text/content below the image */
+.image-card-content {
+  padding: 10px;
+}

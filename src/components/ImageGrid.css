@@ -1,0 +1,20 @@
+/* src/components/ImageGrid.css */
+
+/* Styles required by react-masonry-css */
+.my-masonry-grid {
+  display: flex;
+  margin-left: -15px; /* Adjust gutter size */
+  width: auto;
+  padding: 0 10px; /* Add some horizontal padding to the overall grid */
+}
+
+.my-masonry-grid_column {
+  padding-left: 15px; /* Column gutter */
+  background-clip: padding-box; /* Important! */
+}
+
+/* Style Target: Apply styles to direct div child (ImageCard) */
+.my-masonry-grid_column > div {
+   margin-bottom: 15px; /* Spacing between items in the same column */
+   /* Fade-in animation applied in index.css via .animations-enabled */
+}

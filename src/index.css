@@ -1,3 +1,65 @@
+/* src/index.css */
+
+/* Define Light Mode Variables */
+:root {
+  --bg-color: #f0f0f0; /* Light background */
+  --text-color: #333; /* Dark text */
+  --card-bg-color: #ffffff;
+  --card-shadow-color: rgba(0, 0, 0, 0.1);
+  --modal-bg-color: rgba(0, 0, 0, 0.9);
+  --modal-text-color: rgba(255, 255, 255, 0.85);
+  --modal-button-bg: rgba(0,0,0,0.4);
+  --modal-button-text: white;
+  --modal-button-hover-bg: rgba(255,255,255,0.3);
+  --modal-button-hover-text: black;
+  --search-bg-color: #ffffff;
+  --search-border-color: #ccc;
+  --search-focus-border-color: #007bff;
+  --search-focus-shadow-color: rgba(0, 123, 255, 0.5);
+  --indicator-text-color: #555;
+  --fab-bg-color: #ffffff;
+  --fab-bg-hover-color: #f0f0f0;
+  --fab-icon-color: #555;
+  --action-button-bg: #007bff;
+  --action-button-hover-bg: #0056b3;
+  --action-button-text: white;
+  --clear-button-bg: #dc3545;
+  --clear-button-hover-bg: #c82333;
+
+  /* Transition speed variables */
+  --transition-fast: 0.1s;
+  --transition-std: 0.2s;
+  --transition-med: 0.3s;
+  --transition-slow: 0.4s;
+}
+
+/* Define Dark Mode Overrides */
+body.dark-mode {
+  --bg-color: #1a1a1a; /* Dark background */
+  --text-color: #e0e0e0; /* Light text */
+  --card-bg-color: #2c2c2c;
+  --card-shadow-color: rgba(0, 0, 0, 0.4);
+  --modal-bg-color: rgba(0, 0, 0, 0.95);
+  --modal-text-color: rgba(255, 255, 255, 0.9);
+  --modal-button-bg: rgba(255,255,255,0.2);
+  --modal-button-text: #e0e0e0;
+  --modal-button-hover-bg: rgba(255,255,255,0.4);
+  --modal-button-hover-text: #1a1a1a;
+  --search-bg-color: #333;
+  --search-border-color: #555;
+  --search-focus-border-color: #58a6ff;
+  --search-focus-shadow-color: rgba(88, 166, 255, 0.5);
+  --indicator-text-color: #aaa;
+  --fab-bg-color: #333;
+  --fab-bg-hover-color: #444;
+  --fab-icon-color: #e0e0e0;
+  --action-button-bg: #58a6ff; /* Lighter blue */
+  --action-button-hover-bg: #3081d9;
+  --clear-button-bg: #f85149; /* Lighter red */
+  --clear-button-hover-bg: #e04343;
+}
+
+/* Base Body Styles */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +67,135 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-med) ease, color var(--transition-med) ease; /* Theme transition */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* --- Base Transitions (Set properties, default duration 0s) --- */
+.image-card, .fab-button, .full-screen-overlay, .full-screen-image, .nav-button, .close-button, .action-button, .search-input {
+   transition-property: transform, opacity, background-color, box-shadow, border-color;
+   transition-duration: 0s; /* Default: No animation */
+   transition-timing-function: ease-in-out;
+}
+
+/* --- Enable Transitions via .animations-enabled --- */
+body.animations-enabled .image-card,
+body.animations-enabled .fab-button,
+body.animations-enabled .full-screen-image,
+body.animations-enabled .nav-button,
+body.animations-enabled .close-button,
+body.animations-enabled .action-button,
+body.animations-enabled .search-input {
+    transition-duration: var(--transition-std); /* Standard duration */
+}
+
+body.animations-enabled .full-screen-overlay {
+    /* Modal fade uses specific properties and duration */
+    transition-property: opacity, background-color;
+    transition-duration: var(--transition-med);
+}
+
+body.animations-enabled .scroll-top-button {
+    /* Scroll button uses its own appearance transition */
+     transition: opacity var(--transition-med) ease, transform var(--transition-med) ease;
+}
+
+
+/* --- Specific Animations & Hover/Active States --- */
+
+/* Card hover/active */
+body.animations-enabled .image-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 15px var(--card-shadow-color);
+}
+body.animations-enabled .image-card:active {
+    transform: scale(1.01);
+    transition-duration: var(--transition-fast);
+}
+
+/* Masonry item appearance */
+@keyframes fadeInScaleUp {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+body.animations-enabled .my-masonry-grid_column > div {
+   animation: fadeInScaleUp var(--transition-slow) ease-out forwards;
+}
+
+/* Modal overlay fade-in (triggered by component mount) */
+.full-screen-overlay {
+    opacity: 0; /* Start transparent */
+    background-color: rgba(0, 0, 0, 0);
+    /* Final state styles will be applied automatically */
+}
+.full-screen-overlay {
+    /* Define target state styles */
+    opacity: 1;
+    background-color: var(--modal-bg-color);
+}
+
+/* FAB hover/active */
+body.animations-enabled .fab-button:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  background-color: var(--fab-bg-hover-color);
+}
+body.animations-enabled .fab-button:active {
+    transform: scale(0.95);
+    transition-duration: var(--transition-fast);
+}
+
+/* Action button hover/active */
+.action-button { /* Base colors from vars */
+    background-color: var(--action-button-bg);
+    color: var(--action-button-text);
+}
+.clear-button {
+    background-color: var(--clear-button-bg);
+}
+body.animations-enabled .action-button:hover:not(:disabled) {
+    background-color: var(--action-button-hover-bg);
+}
+body.animations-enabled .clear-button:hover:not(:disabled) {
+    background-color: var(--clear-button-hover-bg);
+}
+body.animations-enabled .action-button:active:not(:disabled) {
+     transform: scale(0.97);
+     transition-duration: var(--transition-fast);
+}
+
+/* Modal Navigation Button Hover */
+body.animations-enabled .nav-button:hover,
+body.animations-enabled .close-button:hover {
+    background-color: var(--modal-button-hover-bg);
+    color: var(--modal-button-hover-text);
+    transform: scale(1.1); /* Base scale */
+}
+/* Add back translateY for vertical centering on nav buttons */
+body.animations-enabled .nav-button:hover {
+     transform: scale(1.1) translateY(-50%);
+}
+
+
+/* Search Input Focus */
+.search-input {
+    border: 1px solid var(--search-border-color);
+    background-color: var(--search-bg-color);
+    color: var(--text-color);
+}
+.search-input:focus {
+  /* No transition needed for focus outline */
+  border-color: var(--search-focus-border-color);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 5px var(--search-focus-shadow-color);
+  outline: none;
 }
