@@ -1,25 +1,120 @@
 /* src/components/ImageCard.css */
 .image-card {
-  width: 100%; /* Take full width of the column */
-  cursor: pointer;
-  overflow: hidden;
+  width: 100%;
+  cursor: grab;
+  overflow: visible; /* Allow remove button to slightly overflow */
   border-radius: 8px;
-  box-shadow: 0 2px 5px var(--card-shadow-color); /* Use variable */
-  background-color: var(--card-bg-color); /* Use variable */
-  /* Base transition defined in index.css */
+  box-shadow: 0 2px 5px var(--card-shadow-color);
+  background-color: var(--card-bg-color);
+  transition: box-shadow var(--transition-std) ease,
+    opacity var(--transition-std) ease, outline var(--transition-fast) ease;
+  position: relative; /* Context for absolute positioned button */
+  touch-action: none; /* Prevent scrolling during drag on touch */
 }
 
-/* Hover/Active states handled in index.css via .animations-enabled */
+/* Original item while dragging */
+.image-card.dragging {
+  cursor: grabbing;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  /* Opacity handled via inline style */
+}
+
+/* --- Drag Overlay Preview Styling --- */
+.image-card-overlay-preview {
+  cursor: grabbing;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  max-width: 250px; /* Limit preview size */
+  max-height: 250px;
+  width: auto;
+  height: auto;
+  background-color: var(--card-bg-color);
+  min-height: 50px; /* Prevent collapse */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-card-overlay-preview img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain; /* Preserve aspect ratio */
+  object-position: center center;
+  border-radius: 8px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Item being dragged OVER */
+.image-card.over {
+  outline: 2px solid var(--search-focus-border-color);
+  outline-offset: -2px;
+}
 
 .image-card img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 8px; /* If just image, keep */
-  /* border-radius: 8px 8px 0 0; /* Only top corners if text below */
+  border-radius: 8px; /* Keep image itself rounded */
+  pointer-events: none;
+  user-select: none;
 }
 
-/* Optional: Add space if you have text/content below the image */
-.image-card-content {
-  padding: 10px;
+/* --- Remove Button Styles --- */
+.image-card-remove-button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: rgba(
+    220,
+    53,
+    69,
+    0.7
+  ); /* Bootstrap danger red, semi-transparent */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px; /* Approx center '×' */
+  text-align: center;
+  cursor: pointer;
+  opacity: 0; /* Hidden by default */
+  transform: scale(0.8) translate(5px, 5px); /* Start slightly offset */
+  transform-origin: bottom right;
+  transition: opacity var(--transition-std) ease,
+    transform var(--transition-std) ease,
+    background-color var(--transition-std) ease;
+  z-index: 5; /* Above image */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+/* Show remove button on card hover (if enabled via setting) */
+.image-card:hover .image-card-remove-button {
+  opacity: 1;
+  transform: scale(1) translate(0, 0); /* Animate into place */
+}
+
+/* Enhance button appearance on its own hover/focus */
+.image-card-remove-button:hover,
+.image-card-remove-button:focus {
+  background-color: rgba(220, 53, 69, 1); /* Solid red */
+  transform: scale(1.1) translate(0, 0); /* Slightly larger */
+  opacity: 1;
+}
+/* Hide remove button if item is being dragged */
+.image-card.dragging .image-card-remove-button {
+  display: none;
+}
+
+/* Global body class */
+body.dragging-active {
+  cursor: grabbing !important;
 }

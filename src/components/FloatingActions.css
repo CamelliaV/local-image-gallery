@@ -4,9 +4,9 @@
   bottom: 30px;
   right: 30px;
   display: flex;
-  flex-direction: column; /* Stack buttons vertically */
-  gap: 10px; /* Space between buttons */
-  z-index: 900; /* Below modal (1000) but above general content */
+  flex-direction: column;
+  gap: 10px;
+  z-index: 900;
 }
 
 .fab-button {
@@ -21,42 +21,26 @@
   align-items: center;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.2s ease, transform 0.2s ease, opacity 0.3s ease;
-  opacity: 0.85; /* Slightly transparent */
+  opacity: 0.85;
+  /* transition defined in index.css via body.animations-enabled */
 }
 
-.fab-button:hover {
-  opacity: 1;
-  transform: scale(1.1);
-  background-color: var(--fab-bg-hover-color);
-}
-
-/* Specific transition for scroll-top appearance */
+/* Scroll top button specific styles */
 .scroll-top-button {
-    /* Start hidden */
-    opacity: 0;
-    transform: translateY(20px) scale(0.9);
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  pointer-events: none;
 }
-
-/* Style when scroll-top should be visible (applied via component logic) */
 .floating-actions-container > .scroll-top-button {
-    /* Override opacity/transform when it should be shown */
-    /* This is implicitly handled by React rendering/not rendering it,
-       but you could add a class if you prefer CSS transitions */
-    opacity: 0.85;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-}
-.floating-actions-container > .scroll-top-button:hover {
-    opacity: 1;
-    transform: scale(1.1); /* Keep hover scale */
+  opacity: 0.85;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
+/* --- REMOVED Dustbin Button Styles --- */
 
+/* Ensure icons size correctly */
 .fab-button svg {
-  /* Ensure icons size correctly */
   width: 20px;
   height: 20px;
 }

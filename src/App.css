@@ -1,144 +1,115 @@
 /* src/App.css */
-/* ... (previous styles) ... */
-/* src/App.css */
 .App {
-  /* This should center the H1 text and the search-container block */
   text-align: center;
+  padding-top: 70px; /* Adjust as needed for fixed top-bar */
+  position: relative;
 }
 
-.App h1 {
-  margin: 20px 0 10px 0;
-  color: #333;
-  /* H1 is block, text-align: center from .App centers its text content */
+/* --- Top Bar --- */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--card-bg-color);
+    box-shadow: 0 2px 5px var(--card-shadow-color);
+    z-index: 950;
+    transition: background-color var(--transition-med) ease;
 }
 
-/* --- Search Input Styles --- */
-.search-container {
-  /* Block element, centered by .App's text-align: center */
-  margin: 15px 0 25px 0; /* Vertical margins only */
-  /* The input inside will be centered due to inherited text-align: center */
-}
-
-.search-input {
-  /* It's an inline-block (effectively), centered by parent's text-align */
-  padding: 10px 15px;
-  font-size: 1rem;
-  width: 60%;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  outline: none;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.search-input:focus {
-  border-color: #007bff;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-/* ... other styles (loading indicators, etc.) ... */
-/* --- Loading/End Indicators --- */
-.loading-indicator,
-.all-loaded-indicator {
-  text-align: center;
-  padding: 20px;
-  color: #555;
-  font-size: 1.1em;
-  margin-top: 20px;
-}
-
-.no-results {
-    margin-top: 30px;
-    color: #666;
-    font-style: italic;
-}
-
-/* --- NEW: Directory Controls --- */
 .directory-controls {
-  padding: 15px;
-  text-align: center; /* Center buttons */
-  border-bottom: 1px solid var(--search-border-color); /* Optional separator */
-  margin-bottom: 15px;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border-bottom: none;
+    margin-bottom: 0;
+    position: static;
+    text-align: left;
+    display: flex;
+    gap: 10px;
 }
 
 .action-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s ease, opacity 0.2s ease;
-  margin: 0 5px; /* Spacing between buttons */
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    /* Base transition defined in index.css */
+    /* Colors/hover defined via vars/animations in index.css */
 }
 
-.action-button:hover:not(:disabled) {
-  background-color: #0056b3;
+/* --- Settings Area --- */
+.settings-container {
+    position: relative;
 }
 
-.action-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.settings-button {
+    background: none;
+    border: none;
+    padding: 5px;
+    margin: 0;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity var(--transition-std);
+}
+.settings-button:hover {
+    opacity: 1;
+}
+.settings-button span {
+    display: block;
+    color: var(--text-color);
+    transition: color var(--transition-med);
+    font-size: 1.3em;
+    line-height: 1;
 }
 
-.clear-button {
-    background-color: #dc3545; /* Red for clear/danger action */
-}
-.clear-button:hover:not(:disabled) {
-    background-color: #c82333;
-}
-
-
-/* Optional: Adjust Search Container margin if controls are above */
-.search-container {
-  margin: 10px 0 25px 0; /* Reduced top margin */
-}
-
-.no-results { /* Keep or adjust existing style */
-    margin-top: 30px;
-    color: var(--indicator-text-color); /* Use variable */
-    font-style: italic;
-    text-align: center; /* Ensure centered */
+.settings-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    background-color: var(--card-bg-color);
+    border-radius: 4px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    padding: 10px 15px;
+    z-index: 960;
+    min-width: 180px;
+    text-align: left;
+    border: 1px solid var(--search-border-color);
+    opacity: 0;
+    transform: translateY(-5px);
+    animation: fadeInDown 0.2s ease-out forwards;
+    pointer-events: auto; /* Ensure clickable */
 }
 
-/* Ensure indicators use variables */
-.loading-indicator,
-.all-loaded-indicator {
-  text-align: center;
-  padding: 20px;
-  color: var(--indicator-text-color); /* Use variable */
-  font-size: 1.1em;
-  margin-top: 20px;
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-5px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Ensure messages are centered and clear */
-.no-results,
-.loading-indicator,
-.all-loaded-indicator {
-  text-align: center;
-  padding: 20px;
-  color: var(--indicator-text-color);
-  font-size: 1.1em;
-  margin-top: 20px;
-  font-style: italic; /* Keep italic for emphasis */
+.settings-dropdown label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    user-select: none;
 }
+.settings-dropdown label:last-child { margin-bottom: 0; }
+.settings-dropdown input[type="checkbox"] { margin-right: 8px; }
 
-.loading-indicator {
-    font-style: normal; /* Loading isn't usually italic */
+
+/* --- Other Styles --- */
+.App h1 { margin: 20px 0 10px 0; color: var(--text-color); }
+.search-container { margin: 10px 0 25px 0; }
+.search-input {
+    padding: 10px 15px; font-size: 1rem; width: 60%; max-width: 400px;
+    border-radius: 20px; outline: none;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
-/* Optional: Add slight visual separation for controls */
-.directory-controls {
-  /* ... existing ... */
-  background-color: var(--card-bg-color); /* Subtle background */
-  box-shadow: 0 1px 3px var(--card-shadow-color); /* Subtle shadow */
-  border-bottom: none; /* Remove border if using shadow */
-  margin-bottom: 20px;
-  padding: 12px 15px; /* Adjust padding */
-  position: sticky; /* Make controls stick to top */
-  top: 0;
-  z-index: 950; /* Below modal but above content */
-  transition: background-color 0.3s ease;
+.loading-indicator, .all-loaded-indicator, .no-results {
+    text-align: center; padding: 20px; color: var(--indicator-text-color);
+    font-size: 1.1em; margin-top: 20px; font-style: italic;
 }
